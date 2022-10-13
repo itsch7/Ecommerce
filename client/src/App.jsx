@@ -1,0 +1,39 @@
+import Product from "./pages/Product";
+import Home from "./pages/Home";
+import ProductList from "./pages/ProductList";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Cart from "./pages/Cart";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+import Success from "./pages/Success";
+import { useSelector } from "react-redux";
+
+const App = () => {
+  const user =useSelector(state => state.user.currentUser);
+  return (
+  <Router> 
+    <Routes>
+    <Route exact path ="/" element = { user ? <Home/> : <Login/>}></Route>
+    <Route exact path ="/products/:category" element = {user ? <ProductList/>: <Login />}></Route>
+    <Route exact path ="/product/:id" element =  {user ? <Product/>: <Login />}></Route>
+
+    <Route exact path ="/cart" element = { user ? <Cart/> : <Login />}></Route>
+    <Route exact path ="/success" element = { user ? <Success/> : <Login />}></Route>
+
+    <Route exact path ="/register" element = { !user ? <Register/>: <Home />}></Route>
+    <Route exact path ="/login" element = { !user ? <Login/> : <Home />}></Route>
+
+
+    </Routes>
+  </Router>
+  )
+  
+  
+};
+
+export default App;
